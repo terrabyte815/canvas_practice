@@ -1,24 +1,64 @@
-const canvas = document.getElementById('canvas1');
-const ctx = canvas.getContext('2d');
-canvas.width = 800;
-canvas.height = 450;
+const img1 = new Image()
+img1.src = "img/picture.png"
 
-const image1 = new Image();
+img1.addEventListener('load',function(){
+  const canvas = document.getElementById("canvas1")
+  const ctx = canvas.getContext("2d")
+  
+  canvas.width = canvas.offsetWidth
+  canvas.height = canvas.offsetHeight
 
-image1.src = "img/picture.png";
+  let particlesArray = []
+  const numberOfParticles = 2500
 
-image1.addEventListener('load',function(){
-  ctx.drawImage(image1,0,0,canvas.width,canvas.height);
-  const scannedImage = ctx.getImageData(0,0,canvas.width,canvas.height);
-  console.log(scannedImage);
-  const scannedData = scannedImage.data
+  class Particle{
+    constructor(){
+      this.x = Math.random()*canvas.width
+      this.y = 0
+      this.speed = 0
+      this.velocity = 1+Math.random()*3.5
+      this.size = Math.random()*3.5
+    }
 
-  for (let i=0;i<scannedData.length;i+=4){
-    let avg = (scannedData[i]+scannedData[i+1]+scannedData[i+2])/3
-    avg = parseInt(avg.toFixed(0))
-    scannedData[i] = avg*1.3
-    scannedData[i+1] =  avg*0.3
-    scannedData[i+2] = avg*0.3
+    update(){
+      this.y+=this.velocity
+      if (this.y>=canvas.height){
+        this.y=0
+        this.x=Math.random()*canvas.width
+      }
+    }
+
+    draw(){
+      ctx.beginPath()
+      ctx.fillStyle = 'white'
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2)
+      ctx.fill()
+    }
   }
-  ctx.putImageData(scannedImage,0,0)
+
+  function init(){
+    for (let i=0;i<numberOfParticles;i++){
+      particlesArray.push(new Particle )
+    }
+  }
+
+  init()
+
+  function Animate(){
+    ctx.drawImage(img1,0,0,canvas.width,canvas.height)
+    ctx.globalAlpha = 0.15
+    ctx.fillStyle = 'rgb(0,0,0)'
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+    for (let i=0;i<numberOfParticles;i++){
+      particlesArray[i].draw()
+      particlesArray[i].update()
+    }
+
+    requestAnimationFrame(Animate)
+
+  }
+
+  Animate()
+
 })
+
