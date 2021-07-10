@@ -4,15 +4,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="style.css">
   <title>Particle Rain</title>
 </head>
 <body>
-  <canvas id="canvas1"></canvas>
-  <input type="range" id="red" min="0" max="200" placeholder="Red">
-  <input type="range" id="green" min="0" max="200" placeholder="Green">
-  <input type="range" id="blue" min="0" max="200" placeholder="Blue">
-  <input type="range" id="alpha" min="0" max="200" placeholder="Alpha">
+  <input type="file" id="input_file">
+  <div class="container">
+    <div class="canvas-container">
+      <canvas id="canvas1">Hello</canvas>
+    </div>
+    <div class="input-container">
+      <input type="range" id="red" class="slider" min="0" max="200" placeholder="red">
+      <input type="range" id="green" class="slider" min="0" max="200" placeholder="green">
+      <input type="range" id="blue" class="slider" min="0" max="200" placeholder="blue">
+      <input type="range" id="alpha" class="slider" min="0" max="100" placeholder="alpha">
+    </div>
+    
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

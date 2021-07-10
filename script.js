@@ -8,11 +8,23 @@ let alphaElement = document.getElementById("alpha")
 canvas.width = canvas.offsetWidth
 canvas.height = canvas.offsetHeight
 
+const input_file = document.getElementById("input_file")
 const img1 = new Image()
-img1.src = 'img/black_panther.jpg'
+img1.src = 'img/black_panther.jpg' 
 
+input_file.addEventListener("change",function(){
 
+  const file = this.files[0]
 
+  if (file){
+    const reader = new FileReader()
+    reader.addEventListener("load",function(){
+      img1.src = reader.result
+    })
+    reader.readAsDataURL(file)
+  }
+
+})
 
 img1.addEventListener('load',function(){
   ctx.drawImage(img1,0,0,canvas.width,canvas.height)
@@ -29,11 +41,11 @@ img1.addEventListener('load',function(){
      imageData[i] = imageData[i]*red
      imageData[i+1] = imageData[i+1]*green
      imageData[i+2] = imageData[i+2]*blue
-     imageData[i+3] = avg*alpha*3
-     //imageData[i+3] = avg
+     imageData[i+3] = 255-avg*alpha
   }
   ctx.putImageData(canvasImage,0,0)
   }
+
   
   redElement.addEventListener("change",RGBtoGray)
   greenElement.addEventListener("change",RGBtoGray)
