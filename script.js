@@ -9,7 +9,7 @@ canvas.width = canvas.offsetWidth
 canvas.height = canvas.offsetHeight
 
 const img1 = new Image()
-img1.src = 'img/Loki.jpg'
+img1.src = 'img/black_panther.jpg'
 
 
 
