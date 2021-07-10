@@ -1,64 +1,42 @@
+const canvas = document.getElementById('canvas1')
+const ctx = canvas.getContext('2d')
+
+let redElement = document.getElementById("red")
+let greenElement = document.getElementById("green")
+let blueElement = document.getElementById("blue")
+let alphaElement = document.getElementById("alpha")
+canvas.width = canvas.offsetWidth
+canvas.height = canvas.offsetHeight
+
 const img1 = new Image()
-img1.src = "img/picture.png"
+img1.src = 'img/Loki.jpg'
+
+
+
 
 img1.addEventListener('load',function(){
-  const canvas = document.getElementById("canvas1")
-  const ctx = canvas.getContext("2d")
+  ctx.drawImage(img1,0,0,canvas.width,canvas.height)
+  let RGBtoGray = function(){
+  ctx.drawImage(img1,0,0,canvas.width,canvas.height)
+  let canvasImage = ctx.getImageData(0,0,canvas.width,canvas.height)
+  const imageData = canvasImage.data
+  let red = document.getElementById("red").value/100
+  let green = document.getElementById("green").value/100
+  let blue = document.getElementById("blue").value/100
+  let alpha = document.getElementById("alpha").value/100
+  for (let i=0;i<imageData.length;i+=4){
+     let avg = Math.floor((imageData[i]+imageData[i+1]+imageData[i+2])/3)
+     imageData[i] = imageData[i]*red
+     imageData[i+1] = imageData[i+1]*green
+     imageData[i+2] = imageData[i+2]*blue
+     imageData[i+3] = avg*alpha*3
+     //imageData[i+3] = avg
+  }
+  ctx.putImageData(canvasImage,0,0)
+  }
   
-  canvas.width = canvas.offsetWidth
-  canvas.height = canvas.offsetHeight
-
-  let particlesArray = []
-  const numberOfParticles = 2500
-
-  class Particle{
-    constructor(){
-      this.x = Math.random()*canvas.width
-      this.y = 0
-      this.speed = 0
-      this.velocity = 1+Math.random()*3.5
-      this.size = Math.random()*3.5
-    }
-
-    update(){
-      this.y+=this.velocity
-      if (this.y>=canvas.height){
-        this.y=0
-        this.x=Math.random()*canvas.width
-      }
-    }
-
-    draw(){
-      ctx.beginPath()
-      ctx.fillStyle = 'white'
-      ctx.arc(this.x,this.y,this.size,0,Math.PI*2)
-      ctx.fill()
-    }
-  }
-
-  function init(){
-    for (let i=0;i<numberOfParticles;i++){
-      particlesArray.push(new Particle )
-    }
-  }
-
-  init()
-
-  function Animate(){
-    ctx.drawImage(img1,0,0,canvas.width,canvas.height)
-    ctx.globalAlpha = 0.15
-    ctx.fillStyle = 'rgb(0,0,0)'
-    ctx.fillRect(0,0,canvas.width,canvas.height)
-    for (let i=0;i<numberOfParticles;i++){
-      particlesArray[i].draw()
-      particlesArray[i].update()
-    }
-
-    requestAnimationFrame(Animate)
-
-  }
-
-  Animate()
-
+  redElement.addEventListener("change",RGBtoGray)
+  greenElement.addEventListener("change",RGBtoGray)
+  blueElement.addEventListener("change",RGBtoGray)
+  alphaElement.addEventListener("change",RGBtoGray)
 })
-
